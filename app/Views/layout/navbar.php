@@ -7,14 +7,16 @@
             </svg>
             AkademikPro.id
         </div>
-        <div class="hidden md:flex items-center space-x-10 text-[15px]">
-            <a class="text-[#A68A64] font-medium" href="<?= base_url('/') ?>">Home</a>
-            <a class="text-gray-600 font-medium hover:text-[#A68A64] transition-colors" href="<?= base_url('products') ?>">Products</a>
-            <a class="text-gray-600 font-medium hover:text-[#A68A64] transition-colors" href="<?= base_url('about') ?>">About</a>
-            <a class="text-gray-600 font-medium hover:text-[#A68A64] transition-colors" href="<?= base_url('blog') ?>">Blog</a>
-            <a class="text-gray-600 font-medium hover:text-[#A68A64] transition-colors" href="<?= base_url('contact') ?>">Contact</a>
-            <a class="text-gray-600 font-medium hover:text-[#A68A64] transition-colors" href="<?= base_url('freelance') ?>">Daftar Freelance</a>
+        
+        <div class="hidden md:flex items-center space-x-10 text-[18px] font-bold text-black" style="font-family: 'Merriweather', Georgia, serif;">
+            <a class="hover:text-[#A68A64] transition-colors" href="<?= base_url('/') ?>">Home</a>
+            <a class="hover:text-[#A68A64] transition-colors" href="<?= base_url('products') ?>">Products</a>
+            <a class="hover:text-[#A68A64] transition-colors" href="<?= base_url('about') ?>">About</a>
+            <a class="hover:text-[#A68A64] transition-colors" href="<?= base_url('blog') ?>">Blog</a>
+            <a class="hover:text-[#A68A64] transition-colors" href="<?= base_url('contact') ?>">Contact</a>
+            <a class="hover:text-[#A68A64] transition-colors" href="<?= base_url('freelance') ?>">Daftar Freelance</a>
         </div>
+        
         <div class="flex items-center gap-6 text-gray-700">
             
             <button class="trigger-search hover:text-[#A68A64] transition-colors flex items-center">
@@ -27,7 +29,6 @@
                     <span class="material-symbols-outlined text-[24px]">person</span>
                 </a>
                 
-                <!-- Profile Dropdown -->
                 <div class="absolute right-0 top-full w-[260px] bg-white border border-gray-100 shadow-[0_4px_15px_-3px_rgba(0,0,0,0.1)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 -mt-1">
                     <div class="p-5 flex items-center gap-4 border-b border-gray-100">
                         <div class="w-[45px] h-[45px] bg-[#d1d5db] rounded-full flex items-center justify-center text-white flex-shrink-0">
