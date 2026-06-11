@@ -27,8 +27,8 @@
         <?php 
         $icons = ['military_tech', 'workspace_premium', 'admin_panel_settings', 'thumb_up', 'payments', 'verified_user'];
         foreach ($kelebihan as $i => $item): ?>
-        <div class="flex flex-col items-center group">
-            <span class="material-symbols-outlined text-5xl text-black mb-4 group-hover:scale-110 transition-transform duration-500"><?= $icons[$i] ?? 'star' ?></span>
+        <div class="flex flex-col items-center">
+            <span class="material-symbols-outlined text-5xl text-black mb-4"><?= $icons[$i] ?? 'star' ?></span>
             <h3 class="font-bold text-lg mb-3 text-black" style="font-family: 'Merriweather', Georgia, serif;"><?= esc($item->judul_kelebihan) ?></h3>
             <p class="text-[13px] text-gray-500 leading-relaxed max-w-[280px]" style="font-family: 'Plus Jakarta Sans', sans-serif;"><?= esc($item->deskripsi_kelebihan) ?></p>
         </div>
@@ -45,20 +45,42 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <?php 
-            $bgColors = ['#E5F1FA', '#FDF0E6', '#FCE7F3', '#F8F3E6'];
-            $iconColors = ['#bfdbfe', '#fed7aa', '#fbcfe8', '#fef08a']; 
-            foreach ($kategori as $i => $cat): 
+            $kategori_custom = [
+                (object)[
+                    'nama_kategori' => 'Jasa Pembuatan Karya Ilmiah',
+                    'gambar_kategori' => 'Jasa Pembuatan Karya Ilmiah.png',
+                    'jumlah_produk' => '25'
+                ],
+                (object)[
+                    'nama_kategori' => 'Jasa Olah Data Statistik',
+                    'gambar_kategori' => 'Jasa Olah Data Statistik.png',
+                    'jumlah_produk' => '15'
+                ],
+                (object)[
+                    'nama_kategori' => 'Jasa Review Skripsi',
+                    'gambar_kategori' => 'Jasa Review Skripsi.png',
+                    'jumlah_produk' => '20'
+                ],
+                (object)[
+                    'nama_kategori' => 'Jasa Akademik Lainnya',
+                    'gambar_kategori' => 'Jasa Akademik Lainnya.png',
+                    'jumlah_produk' => '20'
+                ]
+            ];
+
+            $bgColors = ['#ffdcb3', '#fbeae9', '#ffdcb3', '#a5c7c6'];
+            foreach ($kategori_custom as $i => $cat): 
                 $bg = $bgColors[$i % count($bgColors)];
-                $ic = $iconColors[$i % count($iconColors)];
             ?>
-            <div class="relative rounded-none overflow-hidden h-64 group cursor-pointer shadow-none border border-gray-200 transition-all duration-500 hover:shadow-2xl" style="background-color: <?= $bg ?>;">
-                <div class="absolute inset-0 flex items-center justify-end p-8 transition-transform duration-700 group-hover:scale-105">
-                     <span class="material-symbols-outlined text-9xl opacity-50 grayscale" style="color: <?= $ic ?>;"><?= esc($cat->gambar_kategori) ?></span>
-                </div>
-                <div class="absolute bottom-6 left-6 relative z-20">
-                    <div class="bg-black text-white px-6 py-3 rounded-none font-bold text-xs tracking-widest uppercase shadow-xl">
+            <div class="relative rounded-none overflow-hidden h-64 cursor-pointer shadow-sm border border-transparent transition-shadow duration-300 hover:shadow-md flex items-center" style="background-color: <?= $bg ?>;">
+                <div class="absolute left-8 md:left-10 z-20 flex flex-col justify-center max-w-[50%]">
+                    <span class="text-[13px] font-black text-black mb-6"><?= esc($cat->jumlah_produk) ?></span>
+                    <h3 class="font-bold text-[19px] md:text-[22px] text-black leading-snug" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                         <?= esc($cat->nama_kategori) ?>
-                    </div>
+                    </h3>
+                </div>
+                <div class="absolute right-4 bottom-0 h-[85%] w-[55%] flex items-end justify-end pointer-events-none">
+                     <img src="<?= base_url('images/' . rawurlencode($cat->gambar_kategori)) ?>" alt="<?= esc($cat->nama_kategori) ?>" class="h-full w-full object-contain object-right-bottom">
                 </div>
             </div>
             <?php endforeach; ?>
@@ -84,15 +106,16 @@
             foreach ($produk_jasa as $i => $prod):
                 $pbg = $prodBgColors[$i % count($prodBgColors)];
             ?>
-            <div class="flex flex-col items-center group relative z-10 hover:z-50 transition-all duration-500">
-                <div class="w-full aspect-[4/5] mb-8 relative flex items-center justify-center bg-transparent">
-                    <div class="absolute inset-0 border border-gray-200 z-0" style="background-color: <?= $pbg ?>;"></div>
+            <div class="flex flex-col items-center relative z-10 border border-transparent hover:border-gray-100 p-4 rounded-2xl hover:shadow-md bg-white transition-shadow duration-300">
+                <div class="w-full aspect-[4/5] mb-6 relative flex items-center justify-center overflow-hidden rounded-xl bg-gray-50 border border-gray-100" style="background-color: <?= $pbg ?>;">
                     
                     <?php if ($prod->discount): ?>
-                        <span class="absolute top-0 left-0 -ml-3 -mt-3 bg-black text-white text-[10px] px-3 py-1.5 font-bold z-30 uppercase tracking-widest shadow-lg" style="font-family: 'Plus Jakarta Sans', sans-serif;"><?= esc($prod->discount) ?></span>
+                        <span class="absolute top-3 left-3 bg-black text-white text-[10px] font-bold px-2.5 py-1 uppercase tracking-widest shadow-md z-30 rounded-sm" style="font-family: 'Plus Jakarta Sans', sans-serif;"><?= esc($prod->discount) ?></span>
                     <?php endif; ?>
                     
-                    <img src="<?= base_url('images/' . esc($prod->gambar_produk)) ?>" alt="<?= esc($prod->nama_produk) ?>" class="w-[115%] h-[115%] max-w-none object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105 relative z-20 shadow-xl">
+                    <div class="absolute inset-0 z-20 flex items-center justify-center p-6">
+                        <img src="<?= base_url('images/' . esc($prod->gambar_produk)) ?>" alt="<?= esc($prod->nama_produk) ?>" class="w-full h-full object-contain drop-shadow-sm">
+                    </div>
                 </div>
                 
                 <h3 class="text-center font-bold text-lg text-black leading-snug mb-3 px-2 relative z-20" style="font-family: 'Merriweather', Georgia, serif;">
@@ -166,10 +189,10 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
             <?php foreach ($blogs as $i => $blog): ?>
-            <div class="flex flex-col group cursor-pointer bg-white p-4 pt-8 shadow-sm hover:shadow-2xl transition-all duration-500 rounded-none border border-gray-100 relative z-10 hover:z-50">
+            <div class="flex flex-col cursor-pointer bg-white p-4 pt-8 shadow-sm hover:shadow-md transition-shadow duration-300 rounded-none border border-gray-100 relative z-10">
                 <div class="w-full aspect-[4/3] mb-8 flex items-center justify-center relative bg-transparent">
                     <div class="absolute inset-0 bg-black z-0"></div>
-                    <img src="<?= base_url('images/blog/' . esc($blog->gambar_blog) . '.webp') ?>" alt="<?= esc($blog->judul_blog) ?>" class="w-[110%] h-[115%] max-w-none object-cover opacity-80 group-hover:opacity-100 grayscale group-hover:grayscale-0 transition-all duration-700 relative z-20 -mt-8 shadow-lg group-hover:scale-105">
+                    <img src="<?= base_url('images/blog/' . esc($blog->gambar_blog) . '.webp') ?>" alt="<?= esc($blog->judul_blog) ?>" class="w-[110%] h-[115%] max-w-none object-cover opacity-90 relative z-20 -mt-8 shadow-lg">
                 </div>
                 
                 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 block" style="font-family: 'Plus Jakarta Sans', sans-serif;"><?= esc($blog->kategori_produk) ?></span>
@@ -193,10 +216,11 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
             <?php foreach ($produk_terbaru as $i => $prod): ?>
-            <div class="flex flex-col items-start group relative z-10 hover:z-50">
-                <div class="w-full aspect-[4/5] mb-8 relative flex items-center justify-center bg-transparent">
-                    <div class="absolute inset-0 bg-gray-100 z-0"></div>
-                    <img src="<?= base_url('images/' . esc($prod->gambar_produk)) ?>" alt="<?= esc($prod->nama_produk) ?>" class="w-[115%] h-[115%] max-w-none object-cover grayscale group-hover:grayscale-0 transition-all duration-700 relative z-20 shadow-md group-hover:shadow-2xl group-hover:scale-105">
+            <div class="flex flex-col items-start relative z-10 border border-transparent hover:border-gray-100 p-4 rounded-2xl hover:shadow-md bg-white transition-shadow duration-300">
+                <div class="w-full aspect-[4/5] mb-6 relative flex items-center justify-center overflow-hidden rounded-xl bg-gray-50 border border-gray-100">
+                    <div class="absolute inset-0 z-20 flex items-center justify-center p-6">
+                        <img src="<?= base_url('images/' . esc($prod->gambar_produk)) ?>" alt="<?= esc($prod->nama_produk) ?>" class="w-full h-full object-contain drop-shadow-sm">
+                    </div>
                 </div>
                 
                 <h3 class="font-bold text-[15px] text-black leading-snug mb-2" style="font-family: 'Merriweather', Georgia, serif;">
@@ -239,7 +263,7 @@
 
         <div class="w-full rounded-none bg-gray-900 shadow-2xl flex items-center justify-center relative min-h-[300px] border border-gray-800 mt-10 mb-10">
             <?php if(!empty($pengaturan->gambar_testimoni)): ?>
-                <img src="<?= base_url('images/testimoni/' . esc($pengaturan->gambar_testimoni)) ?>" alt="Testimoni Customer" class="w-[105%] max-w-none h-auto object-cover grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700 relative z-20 -my-8 shadow-2xl">
+                <img src="<?= base_url('images/testimoni/' . esc($pengaturan->gambar_testimoni)) ?>" alt="Testimoni Customer" class="w-[105%] max-w-none h-auto object-cover relative z-20 -my-8 shadow-2xl">
             <?php else: ?>
                 <div class="w-full py-32 flex flex-col items-center justify-center text-gray-600">
                     <span class="material-symbols-outlined text-6xl mb-4 opacity-30">broken_image</span>
@@ -250,43 +274,43 @@
     </div>
 </section>
 
-<section class="py-24 px-6 md:px-16 bg-[#fafafa]">
+<section class="py-16 px-6 md:px-16 bg-[#fafafa]">
     <div class="max-w-[1200px] mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-black mb-6 uppercase tracking-wider" style="font-family: 'Merriweather', Georgia, serif;">FAQ</h2>
-            <p class="text-[14px] text-gray-500 max-w-2xl mx-auto leading-relaxed" style="font-family: 'Plus Jakarta Sans', sans-serif;">Pemahaman lebih jelas tentang layanan eksklusif yang kami sediakan.</p>
+        <div class="text-center mb-10">
+            <h2 class="text-2xl font-bold text-black mb-4 tracking-wide" style="font-family: 'Plus Jakarta Sans', sans-serif;">Frequently Asked Questions</h2>
+            <p class="text-[13px] text-gray-500 max-w-3xl mx-auto" style="font-family: 'Plus Jakarta Sans', sans-serif;">Silahkan lihat bagian FAQ kami untuk mendapatkan pemahaman lebih jelas tentang layanan yang kami sediakan sebagai partner Anda.</p>
         </div>
 
-        <div class="flex flex-col md:flex-row gap-8 items-start">
+        <div class="flex flex-col md:flex-row gap-6 items-start">
             <?php 
                 $half = ceil(count($faqs) / 2);
                 $col1 = array_slice($faqs, 0, $half);
                 $col2 = array_slice($faqs, $half);
             ?>
-            <div class="w-full md:w-1/2 flex flex-col gap-4">
+            <div class="w-full md:w-1/2 flex flex-col gap-2">
                 <?php foreach($col1 as $index => $faq): ?>
-                <details class="group bg-white border border-gray-200 shadow-sm rounded-none" <?= $index === 0 ? 'open' : '' ?>>
-                    <summary class="flex items-center gap-4 p-6 text-black hover:text-gray-500 font-bold cursor-pointer list-none [&::-webkit-details-marker]:hidden text-[13px] uppercase tracking-wide transition-colors" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                        <span class="material-symbols-outlined text-[20px] group-open:hidden">add</span>
-                        <span class="material-symbols-outlined text-[20px] hidden group-open:block">remove</span>
+                <details class="group bg-[#f4f4f4] border border-gray-200 rounded-none shadow-sm" <?= $index === 0 ? 'open' : '' ?>>
+                    <summary class="flex items-center gap-3 p-4 text-black font-bold cursor-pointer list-none [&::-webkit-details-marker]:hidden text-[13px] group-open:bg-[#B49E78] transition-colors" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                        <span class="material-symbols-outlined text-[18px] group-open:hidden font-bold">add_circle</span>
+                        <span class="material-symbols-outlined text-[18px] hidden group-open:block font-bold">remove_circle</span>
                         <?= esc($faq->pertanyaan) ?>
                     </summary>
-                    <div class="p-6 pt-0 text-gray-500 text-[13px] leading-relaxed text-justify border-t border-gray-100 mt-2" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    <div class="p-6 text-gray-700 text-[13px] leading-relaxed text-justify border-t border-gray-200" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                         <?= $faq->jawaban ?>
                     </div>
                 </details>
                 <?php endforeach; ?>
             </div>
 
-            <div class="w-full md:w-1/2 flex flex-col gap-4">
+            <div class="w-full md:w-1/2 flex flex-col gap-2">
                 <?php foreach($col2 as $index => $faq): ?>
-                <details class="group bg-white border border-gray-200 shadow-sm rounded-none" <?= $index === 0 ? 'open' : '' ?>>
-                    <summary class="flex items-center gap-4 p-6 text-black hover:text-gray-500 font-bold cursor-pointer list-none [&::-webkit-details-marker]:hidden text-[13px] uppercase tracking-wide transition-colors" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                        <span class="material-symbols-outlined text-[20px] group-open:hidden">add</span>
-                        <span class="material-symbols-outlined text-[20px] hidden group-open:block">remove</span>
+                <details class="group bg-[#f4f4f4] border border-gray-200 rounded-none shadow-sm" <?= $index === 0 ? 'open' : '' ?>>
+                    <summary class="flex items-center gap-3 p-4 text-black font-bold cursor-pointer list-none [&::-webkit-details-marker]:hidden text-[13px] group-open:bg-[#B49E78] transition-colors" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                        <span class="material-symbols-outlined text-[18px] group-open:hidden font-bold">add_circle</span>
+                        <span class="material-symbols-outlined text-[18px] hidden group-open:block font-bold">remove_circle</span>
                         <?= esc($faq->pertanyaan) ?>
                     </summary>
-                    <div class="p-6 pt-0 text-gray-500 text-[13px] leading-relaxed text-justify border-t border-gray-100 mt-2" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    <div class="p-6 text-gray-700 text-[13px] leading-relaxed text-justify border-t border-gray-200" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                         <?= $faq->jawaban ?>
                     </div>
                 </details>
@@ -296,44 +320,44 @@
     </div>
 </section>
 
-<section class="py-16 bg-black text-white">
-    <div class="max-w-[1200px] mx-auto px-6 md:px-16">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-8">
-            <h3 class="text-xl md:text-2xl font-bold leading-snug max-w-2xl text-center md:text-left" style="font-family: 'Merriweather', Georgia, serif;">
-                Elevasi kualitas akademik Anda. Konsultasikan kebutuhan proyek bersama kami hari ini.
-            </h3>
-            <a href="#" class="inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-none text-xs font-bold hover:bg-gray-200 transition-colors uppercase tracking-widest shadow-xl" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                <span class="material-symbols-outlined text-[18px]">chat</span>
-                Chat Admin
-            </a>
-        </div>
-    </div>
-</section>
-
-<section class="py-20 bg-white text-center">
+<!-- Partnership Section -->
+<section class="pt-16 pb-12 bg-white text-center">
     <div class="max-w-4xl mx-auto px-6">
-        <h2 class="text-sm font-bold text-gray-400 mb-12 uppercase tracking-[0.2em]" style="font-family: 'Plus Jakarta Sans', sans-serif;">Supported By & Payment</h2>
+        <h2 class="text-[18px] font-bold text-black mb-4 tracking-wide" style="font-family: 'Plus Jakarta Sans', sans-serif;">Partnership</h2>
         
-        <div class="flex flex-wrap justify-center items-center gap-10 md:gap-16 grayscale opacity-80 hover:grayscale-0 transition-all duration-700">
+        <div class="flex justify-center items-center">
             <div class="flex items-center gap-1 font-bold text-2xl italic text-[#253275]" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                <span class="text-[#D0235C] font-black text-3xl">JA</span>
+                <span class="text-[#D0235C] font-black text-4xl">JA</span>
                 <span class="ml-2 text-[#253275]">Jasa</span><span class="text-[#D0235C]">Akademik</span><span class="text-xs">id</span>
             </div>
-            
-            <div class="w-[1px] h-10 bg-gray-200 hidden md:block"></div>
-            
-            <div class="text-[#005EAA] font-black text-3xl italic flex items-center gap-2">
-                BCA
-            </div>
-            <div class="text-[#0B5B9D] font-black text-3xl italic flex items-center gap-1">
-                BRI
-            </div>
-            <div class="text-[#F15A23] font-black text-3xl italic flex items-center gap-1">
-                BNI
-            </div>
-            <div class="text-[#4C2A86] font-black text-3xl italic tracking-tighter">
-                OVO
-            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-12 bg-[#fafafa]">
+    <div class="max-w-[1200px] mx-auto px-6 md:px-16 text-left flex flex-col items-start">
+        <h3 class="text-[15px] font-bold text-black mb-6" style="font-family: 'Plus Jakarta Sans', sans-serif;">Tertarik ingin menggunakan layanan jasa AkademikPro.id? Checkout sekarang atau konsultasikan dengan Admin!</h3>
+        <a href="#" class="inline-flex items-center gap-2 bg-[#B49E78] text-black px-6 py-2.5 rounded-md text-[13px] font-bold shadow-sm transition-colors" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+            </svg>
+            Chat Admin
+        </a>
+    </div>
+</section>
+
+<!-- Payment Section -->
+<section class="py-16 bg-white text-center">
+    <div class="max-w-[1200px] mx-auto px-6">
+        <h2 class="text-[18px] font-bold text-black mb-4 tracking-wide" style="font-family: 'Plus Jakarta Sans', sans-serif;">Payment</h2>
+        <p class="text-[13px] text-gray-500 mb-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">Kami menerima pembayaran melalui transfer bank dan dompet digital untuk kemudahan bertransaksi.</p>
+        
+        <div class="flex flex-wrap justify-center items-center gap-6 md:gap-10">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" alt="BCA" class="h-10 object-contain">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/BRI_2020.svg" alt="BRI" class="h-10 object-contain">
+            <img src="https://upload.wikimedia.org/wikipedia/id/5/55/BNI_logo.svg" alt="BNI" class="h-8 object-contain">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_OVO.svg" alt="OVO" class="h-8 object-contain">
         </div>
     </div>
 </section>
